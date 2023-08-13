@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Russia Travelmap</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</head>
+<body>
+
+    <div id="map" style="width: 100%; height: 1024px; position: absolute; left: 0px; top: 0px;"></div>
+
+    <script>var map = L.map('map').setView([55.7558, 37.6173], 5); // Координаты России
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Пример данных о городах (замените на свои данные)
+        var citiesData = [
+            { name: 'Москва', population: 12678079, latlng: [55.7558, 37.6173] },
+            { name: 'Санкт-Петербург', population: 12678079, latlng: [59.9386, 30.3141] },
+            { name: 'Новосибирск', population: 12678079, latlng: [55.0415, 82.9346] },
+            { name: 'Екатеринбург', population: 12678079, latlng: [56.8519, 60.6122] },
+            { name: 'Казань', population: 12678079, latlng: [55.7887, 49.1221] },
+            { name: 'Нижний Новгород', population: 12678079, latlng: [56.3287, 44.002] },
+            { name: 'Красноярск', population: 12678079, latlng: [56.0184, 92.8672] },
+            { name: 'Екатеринбург', population: 12678079, latlng: [56.8519, 60.6122] },
+            { name: "Челябинск", population: 12678079, latlng: [55.1644, 61.4368] },
+            { name: "Самара", population: 12678079, latlng: [53.1959, 50.1009] },
+            { name: "Уфа", population: 12678079, latlng: [54.7388, 55.9721] },
+            { name: "Ростов-на-Дону", population: 12678079, latlng: [47.2357, 39.7015] },
+            { name: "Краснодар", population: 12678079, latlng: [45.0355, 38.9753] },
+            { name: "Омск", population: 12678079, latlng: [54.9893, 73.3682] },
+            { name: "Воронеж", population: 12678079, latlng: [51.672, 39.1843] },
+            { name: "Пермь", population: 12678079, latlng: [58.0104, 56.2299] },
+            { name: "Волгоград", population: 12678079, latlng: [48.7071, 44.5170] },
+            { name: "Саратов", population: 12678079, latlng: [51.5336, 46.0342] },
+            { name: "Тюмень", population: 12678079, latlng: [57.1536, 65.5423] },
+            { name: "Тольятти", population: 12678079, latlng: [53.5078, 49.4204] },
+            { name: "Барнаул", population: 12678079, latlng: [53.3566, 83.7497] },
+            { name: "Махачкала", population: 12678079, latlng: [42.9849, 47.5047] },
+            { name: "Ижевск", population: 12678079, latlng: [56.8526, 53.2049] },
+            { name: "Хабаровск", population: 12678079, latlng: [48.4647, 135.0599] },
+            { name: "Ульяновск", population: 12678079, latlng: [54.3081, 48.3745] },
+            { name: "Иркутск", population: 12678079, latlng: [52.2864, 104.3050] },
+            { name: "Владивосток", population: 12678079, latlng: [43.1198, 131.8869] },
+            { name: "Ярославль", population: 12678079, latlng: [57.6264, 39.8939] },
+            { name: "Севастополь", population: 12678079, latlng: [44.6166, 33.5254] },
+            { name: "Томск", population: 12678079, latlng: [56.4977, 84.9744] },
+            { name: "Ставрополь", population: 12678079, latlng: [45.0445, 41.9691] },
+            { name: "Кемерово", population: 12678079, latlng: [55.3552, 86.0879] },
+            { name: "Набережные Челны", population: 12678079, latlng: [55.7437, 52.3951] },
+            { name: "Оренбург", population: 12678079, latlng: [51.7681, 55.0969] },
+            { name: "Новокузнецк", population: 12678079, latlng: [53.7609, 87.1199] },
+            { name: "Балашиха", population: 12678079, latlng: [55.8036, 37.9647] },
+            { name: "Рязань", population: 12678079, latlng: [54.6298, 39.7425] },
+            { name: "Чебоксары", population: 12678079, latlng: [56.1406, 47.2485] },
+            { name: "Пенза", population: 12678079, latlng: [53.1950, 45.0183] },
+            { name: "Липецк", population: 12678079, latlng: [52.6102, 39.5942] },
+            { name: "Калининград", population: 12678079, latlng: [54.7104, 20.5107] },
+            { name: "Киров", population: 12678079, latlng: [58.6035, 49.6679] },
+            { name: "Астрахань", population: 12678079, latlng: [46.3656, 48.0556] },
+            { name: "Тула", population: 12678079, latlng: [54.1930, 37.6175] },
+            { name: "Сочи", population: 12678079, latlng: [43.6028, 39.7342] },
+            { name: "Улан-Удэ", population: 12678079, latlng: [51.8345, 107.5846] },
+            { name: "Курск", population: 12678079, latlng: [51.7167, 36.1933] },
+            { name: "Тверь", population: 12678079, latlng: [56.8587, 35.9176] },
+            { name: "Магнитогорск", population: 12678079, latlng: [53.4186, 58.9800] },
+            { name: "Сургут", population: 12678079, latlng: [61.2540, 73.3962] },
+            { name: "Брянск", population: 12678079, latlng: [53.2433, 34.3637] },
+            { name: "Якутск", population: 12678079, latlng: [62.0355, 129.6753] },
+            { name: "Иваново", population: 12678079, latlng: [56.9991, 40.9734] },
+            { name: "Владимир", population: 12678079, latlng: [56.1251, 40.4084] },
+            { name: "Симферополь", population: 12678079, latlng: [44.9485, 34.1004] },
+            { name: "Нижний Тагил", population: 12678079, latlng: [57.9194, 59.9650] },
+            { name: "Калуга", population: 12678079, latlng: [54.5092, 36.2595] },
+            { name: "Белгород", population: 12678079, latlng: [50.5975, 36.5851] },
+            { name: "Чита", population: 12678079, latlng: [52.0313, 113.5009] },
+            { name: "Грозный", population: 12678079, latlng: [43.3179, 45.6986] },
+            { name: "Волжский", population: 12678079, latlng: [48.7978, 44.7445] },
+            { name: "Смоленск", population: 12678079, latlng: [54.7828, 32.0454] },
+            { name: "Подольск", population: 12678079, latlng: [55.4316, 37.5443] },
+            { name: "Саранск", population: 12678079, latlng: [54.1874, 45.1839] },
+            { name: "Вологда", population: 12678079, latlng: [59.2187, 39.8938] },
+            { name: "Курган", population: 12678079, latlng: [55.4443, 65.3295] },
+            { name: "Череповец", population: 12678079, latlng: [59.1270, 37.9097] },
+            { name: "Архангельск", population: 12678079, latlng: [64.5390, 40.5157] },
+            { name: "Орёл", population: 12678079, latlng: [52.9704, 36.0630] },
+            { name: "Владикавказ", population: 12678079, latlng: [43.0241, 44.6819] },
+            { name: "Нижневартовск", population: 12678079, latlng: [60.9397, 76.5690] },
+            { name: "Йошкар-Ола", population: 12678079, latlng: [56.6344, 47.8998] },
+            { name: "Стерлитамак", population: 12678079, latlng: [53.6290, 55.9607] },
+            { name: "Мурманск", population: 12678079, latlng: [68.9707, 33.0819] },
+            { name: "Мытищи", population: 12678079, latlng: [55.9112, 37.7361] },
+            { name: "Кострома", population: 12678079, latlng: [57.7670, 40.9269] },
+            { name: "Новороссийск", population: 12678079, latlng: [44.7235, 37.7680] },
+            { name: "Тамбов", population: 12678079, latlng: [52.7212, 41.4524] },
+            { name: "Химки", population: 12678079, latlng: [55.8882, 37.4301] },
+            { name: "Нальчик", population: 12678079, latlng: [43.4844, 43.6189] },
+            { name: "Таганрог", population: 12678079, latlng: [47.2095, 38.9350] },
+            { name: "Нижнекамск", population: 12678079, latlng: [55.6315, 51.8141] },
+            { name: "Благовещенск", population: 12678079, latlng: [50.2906, 127.5272] },
+            { name: "Комсомольск-на-Амуре", population: 12678079, latlng: [50.5500, 137.0079] },
+            { name: "Петрозаводск", population: 12678079, latlng: [61.7850, 34.3469] },
+            { name: "Люберцы", population: 12678079, latlng: [55.6763, 37.8932] },
+            { name: "Королёв", population: 12678079, latlng: [55.9163, 37.8545] },
+            { name: "Энгельс", population: 12678079, latlng: [51.4831, 46.1263] },
+            { name: "Великий Новгород", population: 12678079, latlng: [58.5225, 31.2693] },
+            { name: "Шахты", population: 12678079, latlng: [47.7092, 40.2153] },
+            { name: "Братск", population: 12678079, latlng: [56.1516, 101.6330] },
+            { name: "Сыктывкар", population: 12678079, latlng: [61.6688, 50.8356] },
+            { name: "Ангарск", population: 12678079, latlng: [52.5600, 103.8901] },
+            { name: "Старый Оскол", population: 12678079, latlng: [51.2967, 37.8410] },
+            { name: "Дзержинск", population: 12678079, latlng: [56.2386, 43.4630] },
+            { name: "Псков", population: 12678079, latlng: [57.8195, 28.3319] },
+            { name: "Красногорск", population: 12678079, latlng: [55.8205, 37.3441] },
+            { name: "Орск", population: 12678079, latlng: [51.2293, 58.4725] },
+            { name: "Одинцово", population: 12678079, latlng: [55.6772, 37.2772] },
+            { name: "Абакан", population: 12678079, latlng: [53.7227, 91.4436] },
+            { name: "Армавир", population: 12678079, latlng: [44.9905, 41.1234] },
+            { name: "Балаково", population: 12678079, latlng: [52.0248, 47.7968] },
+            { name: "Бийск", population: 12678079, latlng: [52.5394, 85.2179] },
+            { name: "Южно-Сахалинск", population: 12678079, latlng: [46.9580, 142.7380] },
+            { name: "Уссурийск", population: 12678079, latlng: [43.8029, 131.9456] },
+            { name: "Прокопьевск", population: 12678079, latlng: [53.8832, 86.7209] },
+            { name: "Норильск", population: 12678079, latlng: [69.3558, 88.1896] },
+            { name: "Рыбинск", population: 12678079, latlng: [57.6232, 39.8978] },
+            { name: "Волгодонск", population: 12678079, latlng: [47.5165, 42.1989] },
+            { name: "Альметьевск", population: 12678079, latlng: [54.9011, 52.2973] },
+            { name: "Сызрань", population: 12678079, latlng: [53.1556, 48.4746] },
+            { name: "Петропавловск-Камчатский", population: 12678079, latlng: [53.0191, 158.6484] },
+            { name: "Каменск-Уральский", population: 12678079, latlng: [56.4140, 61.9326] },
+            { name: "Новочеркасск", population: 12678079, latlng: [47.4215, 40.0909] },
+            { name: "Златоуст", population: 12678079, latlng: [55.1710, 59.6630] },
+            { name: "Хасавюрт", population: 12678079, latlng: [43.2501, 46.5855] },
+            { name: "Северодвинск", population: 12678079, latlng: [64.5625, 39.8184] },
+            { name: "Домодедово", population: 12678079, latlng: [55.4364, 37.7662] },
+            { name: "Керчь", population: 12678079, latlng: [45.3602, 36.4828] },
+            { name: "Миасс", population: 12678079, latlng: [55.0450, 60.1089] },
+            { name: "Салават", population: 12678079, latlng: [53.3619, 55.9245] },
+            { name: "Копейск", population: 12678079, latlng: [55.1160, 61.6185] },
+            { name: "Пятигорск", population: 12678079, latlng: [44.0445, 43.0672] },
+            { name: "Электросталь", population: 12678079, latlng: [55.7842, 38.4445] },
+            { name: "Майкоп", population: 12678079, latlng: [44.6098, 40.1007] },
+            { name: "Находка", population: 12678079, latlng: [42.8240, 132.8924] },
+            { name: "Березники", population: 12678079, latlng: [59.4070, 56.8066] },
+            { name: "Щёлково", population: 12678079, latlng: [55.9243, 37.9912] },
+            { name: "Серпухов", population: 12678079, latlng: [54.9249, 37.3983] },
+            { name: "Нефтекамск", population: 12678079, latlng: [56.0894, 54.2491] },
+            { name: "Коломна", population: 12678079, latlng: [55.0922, 38.7685] },
+            { name: "Ковров", population: 12678079, latlng: [56.3570, 41.3208] },
+            { name: "Обнинск", population: 12678079, latlng: [55.0968, 36.6100] },
+            { name: "Кызыл", population: 12678079, latlng: [51.7191, 94.4374] },
+            { name: "Кисловодск", population: 12678079, latlng: [43.9130, 42.7200] },
+            { name: "Дербент", population: 12678079, latlng: [42.0578, 48.2922] },
+            { name: "Каспийск", population: 12678079, latlng: [42.8884, 47.6385] },
+            { name: "Батайск", population: 12678079, latlng: [47.1391, 39.7519] },
+            { name: "Нефтеюганск", population: 12678079, latlng: [61.0882, 72.6032] },
+            { name: "Рубцовск", population: 12678079, latlng: [51.5163, 81.2065] },
+            { name: "Назрань", population: 12678079, latlng: [43.2249, 44.7734] },
+            { name: "Ессентуки", population: 12678079, latlng: [44.0448, 42.8619] },
+            { name: "Новочебоксарск", population: 12678079, latlng: [56.1100, 47.4795] },
+            { name: "Долгопрудный", population: 12678079, latlng: [55.9399, 37.5149] },
+            { name: "Новомосковск", population: 12678079, latlng: [54.0102, 38.2844] },
+            { name: "Октябрьский", population: 12678079, latlng: [53.1649, 48.5861] },
+            { name: "Невинномысск", population: 12678079, latlng: [44.6225, 41.9479] },
+            { name: "Раменское", population: 12678079, latlng: [55.5700, 38.2250] },
+            { name: "Реутов", population: 12678079, latlng: [55.7658, 37.8616] },
+            { name: "Первоуральск", population: 12678079, latlng: [56.9081, 59.9431] },
+            { name: "Михайловск", population: 12678079, latlng: [45.1293, 42.0288] },
+            { name: "Черкесск", population: 12678079, latlng: [44.2233, 42.0576] },
+            { name: "Пушкино", population: 12678079, latlng: [56.0108, 37.8470] },
+            { name: "Жуковский", population: 12678079, latlng: [55.5972, 38.1200] },
+            { name: "Ханты-Мансийск", population: 12678079, latlng: [61.0014, 69.0019] },
+            { name: "Димитровград", population: 12678079, latlng: [54.2044, 49.6186] },
+            { name: "Артём", population: 12678079, latlng: [43.3521, 132.1889] },
+            { name: "Новый Уренгой", population: 12678079, latlng: [66.0833, 76.6333] },
+            { name: "Евпатория", population: 12678079, latlng: [45.1900, 33.3700] },
+            { name: "Муром", population: 12678079, latlng: [55.5636, 42.0333] },
+            { name: "Северск", population: 12678079, latlng: [56.6000, 84.8800] },
+            { name: "Орехово-Зуево", population: 12678079, latlng: [55.8089, 38.9792] },
+            { name: "Камышин", population: 12678079, latlng: [50.0804, 45.4160] },
+            { name: "Мурино", population: 12678079, latlng: [60.0763, 30.3965] },
+            { name: "Арзамас", population: 12678079, latlng: [55.3971, 43.7989] },
+            { name: "Видное", population: 12678079, latlng: [55.5615, 37.7151] },
+            { name: "Бердск", population: 12678079, latlng: [54.7622, 83.1000] },
+            { name: "Элиста", population: 12678079, latlng: [46.3072, 44.2709] },
+            { name: "Ногинск", population: 12678079, latlng: [55.8634, 38.4744] },
+            { name: "Новошахтинск", population: 12678079, latlng: [47.7641, 39.9340] },
+            { name: "Ноябрьск", population: 12678079, latlng: [63.1997, 75.4506] }
+
+        ];
+
+        citiesData.forEach(city => {
+            if (city.population > 30000) {
+                var circle = L.circle(city.latlng, {
+                    color: 'blue',
+                    fillColor: 'blue',
+                    fillOpacity: 0.5,
+                    radius: 5000 // Примерное отображение населения через радиус круга
+                }).addTo(map);
+
+                circle.on('click', function () {
+                    if (confirm(`Вы были в городе ${city.name}?`)) {
+                        circle.setStyle({ color: 'green', fillColor: 'green' });
+                    }
+                });
+            }
+        });</script>
+
+</body>
+</html>
+
+
+
+   
